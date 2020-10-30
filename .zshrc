@@ -155,3 +155,8 @@ function dockerExec() {
   echo "No Image selected"
   fi
 }
+
+# Git Autocomplete
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi

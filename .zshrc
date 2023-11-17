@@ -160,3 +160,55 @@ function dockerExec() {
 if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
+
+
+
+# 2023 functions
+
+# Read scripts in package.json file, display list of it with fzf and run selected command
+function npms() {
+  local scriptSelected=$(cat package.json | jq '.scripts | keys' | tr -d "\",[]\r " | sed -r '/^\s*$/d' | fzf)
+  if [ "$scriptSelected" != "" ]
+  then
+  npm run $scriptSelected
+  else
+  echo "No command selected"
+  fi
+}
+
+function ezz-op() {
+  local dir=$(ls ~/workspace | fzf)
+  if [ "$dir" != "" ]
+  then
+  cd ~/workspace/$dir
+  code ~/workspace/$dir
+  else
+  echo "No option selected."
+  fi
+}
+
+function code-op() {
+  local dir=$(ls ~/code | fzf)
+  if [ "$dir" != "" ]
+  then
+  cd ~/code/$dir
+  code ~/code/$dir
+  else
+  echo "No option selected."
+  fi
+
+}
+
+function vpns() {
+  vpns="pre\ndev"
+  local vpnSelected=$(echo $vpns | fzf)
+  if [ "$vpnSelected" != "" ]
+  then
+    sudo openvpn --config ~/workspace/vpn-$vpnSelected.ovpn
+  else
+  echo "No option selected."
+  fi
+}
+
+
+
